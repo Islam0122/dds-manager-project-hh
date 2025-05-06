@@ -64,7 +64,7 @@ python manage.py runserver
 
 ### 🚀 **Как запустить фронтенд:**
 ```bash
-git clone https://github.com/your-username/dds-manager.git
+git clone https://github.com/Islam0122/dds-manager-project-hh.git
 cd frontend
 npm install
 npm run dev
