@@ -1,7 +1,8 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializers import *
+from django.db import models
 
 class StatusViewSet(viewsets.ModelViewSet):
     queryset = Status.objects.all()
@@ -45,7 +46,18 @@ class CashFlowViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def statistics(self, request):
-        total_amount = CashFlow.objects.aggregate(total_amount=models.Sum('amount'))
+        status = request.query_params.get('status', None)
+        operation_type = request.query_params.get('operation_type', None)
+        category = request.query_params.get('category', None)
+        queryset = CashFlow.objects.all()
+        if status:
+            queryset = queryset.filter(status__id=status)
+        if operation_type:
+            queryset = queryset.filter(operation_type__id=operation_type)
+        if category:
+            queryset = queryset.filter(category__id=category)
+        total_amount = queryset.aggregate(total_amount=models.Sum('amount'))
+
         return Response(total_amount)
 
     def perform_create(self, serializer):

@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import *
+from .models import Status, OperationType, Category, Subcategory, CashFlow
+
 
 class StatusSerializer(serializers.ModelSerializer):
     class Meta:
@@ -51,7 +52,6 @@ class CashFlowSerializer(serializers.ModelSerializer):
 
         if category.operation_type != operation_type:
             raise serializers.ValidationError("Категория не относится к выбранному типу операции.")
-
         if subcategory.category != category:
             raise serializers.ValidationError("Подкатегория не относится к выбранной категории.")
 

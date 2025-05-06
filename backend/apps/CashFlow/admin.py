@@ -93,6 +93,8 @@ class CashFlowAdmin(admin.ModelAdmin):
     list_filter = ('status', 'operation_type', 'category', 'subcategory', 'date')
     ordering = ('-date',)
     list_select_related = ('status', 'operation_type', 'category', 'subcategory')
+    readonly_fields = ('created_at', 'updated_at')
+
 
     fieldsets = (
         (None, {
